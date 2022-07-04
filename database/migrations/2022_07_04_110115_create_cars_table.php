@@ -17,6 +17,7 @@ class CreateCarsTable extends Migration
             $table->id();
             $table->string('brand');
             $table->string('model');
+            $table->boolean('active')->default(true);
             $table->string('number')->unique();
             $table->timestamps();
         });
