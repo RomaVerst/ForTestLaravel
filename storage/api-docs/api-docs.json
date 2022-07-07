@@ -1,0 +1,746 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Test Laravel API",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "license": {
+            "name": "GNU GPL v3",
+            "url": "https://fsf.org/"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api",
+            "description": "Laravel Test Server"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Register new user",
+                "operationId": "registerUser",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "User name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "string": {
+                                "summary": "John",
+                                "value": "John"
+                            }
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succesfull added new user",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Success response.",
+                                        "value": {
+                                            "message": "User successfull added",
+                                            "errors": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Unprocessable Content.",
+                                        "value": {
+                                            "message": "The given data was invalid.",
+                                            "errors": {
+                                                "email": "The email must be a valid email address."
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Dublicate user",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Dublicate user.",
+                                        "value": {
+                                            "message": "The given data was invalid",
+                                            "errors": {
+                                                "email": [
+                                                    "User with the same email is already exists"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Log in user",
+                "operationId": "loginUser",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succes authorization",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Success response.",
+                                        "value": {
+                                            "access_token": "3biHV254xugVE9UkJRuI6fdjG3Bz3YVopb2ZnbnB"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "User not exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "User not exists.",
+                                        "value": {
+                                            "message": "The given data was invalid",
+                                            "errors": {
+                                                "password": [
+                                                    "Invalid credentials"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Log out user",
+                "operationId": "logoutUser",
+                "responses": {
+                    "200": {
+                        "description": "Succesfull added new user",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Success response.",
+                                        "value": {
+                                            "message": "Logout Success",
+                                            "errors": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Unauthenticated",
+                                        "value": {
+                                            "message": "Unauthenticated"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Logout Fail",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Logout fail.",
+                                        "value": {
+                                            "message": "Logout fail",
+                                            "errors": {
+                                                "email": [
+                                                    "Something went wrong"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cars": {
+            "get": {
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Show cars",
+                "operationId": "getCars",
+                "responses": {
+                    "200": {
+                        "description": "Active cars list",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Success response.",
+                                        "value": {
+                                            "data": [
+                                                {
+                                                    "car_id": 123,
+                                                    "brand": "Some Brand",
+                                                    "model": "Model car",
+                                                    "number": "G123GG12"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Unauthenticated.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rented-cars": {
+            "get": {
+                "tags": [
+                    "Rented Car"
+                ],
+                "summary": "Show rented car",
+                "operationId": "rentedCarShow",
+                "responses": {
+                    "200": {
+                        "description": "Rented car",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Rented car.",
+                                        "value": {
+                                            "rented_id": 1,
+                                            "user": "John",
+                                            "end_rent": "2099-01-01 00:00:00",
+                                            "rentedCar": [
+                                                {
+                                                    "car_id": 1,
+                                                    "brand": "Brand",
+                                                    "model": "Model",
+                                                    "number": "G123GG123"
+                                                }
+                                            ],
+                                            "errors": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Unauthenticated",
+                                        "value": {
+                                            "message": "Unauthenticated"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Not found.",
+                                        "value": {
+                                            "message": "no data info",
+                                            "errors": [
+                                                "no any car rented"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Rented Car"
+                ],
+                "summary": "Add new rent",
+                "description": "Add new rent",
+                "operationId": "storeRentedCar",
+                "parameters": [
+                    {
+                        "name": "time_rent",
+                        "in": "query",
+                        "description": "Time for rent",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    },
+                    {
+                        "name": "car_id",
+                        "in": "query",
+                        "description": "Car id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Success response.",
+                                        "value": {
+                                            "rented_id": 1,
+                                            "message": "Car successfully rented",
+                                            "errors": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Unauthenticated",
+                                        "value": {
+                                            "message": "Unauthenticated"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Service Unavailable.",
+                                        "value": {
+                                            "message": "Update time rent fail",
+                                            "errors": [
+                                                "Problems with update time rent"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Forbidden.",
+                                        "value": {
+                                            "message": "update error",
+                                            "errors": [
+                                                "You do not have permission to update this row"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rented-cars/{id}": {
+            "put": {
+                "tags": [
+                    "Rented Car"
+                ],
+                "summary": "Updates a rente time",
+                "description": "Updates a rente time",
+                "operationId": "updateRentedCar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Rented_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    },
+                    {
+                        "name": "time_rent",
+                        "in": "query",
+                        "description": "Time for rent",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Success response.",
+                                        "value": {
+                                            "message": "Time for rent successfully updated",
+                                            "errors": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Unauthenticated",
+                                        "value": {
+                                            "message": "Unauthenticated"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Service Unavailable.",
+                                        "value": {
+                                            "message": "Update time rent fail",
+                                            "errors": [
+                                                "Problems with update time rent"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Forbidden.",
+                                        "value": {
+                                            "message": "update error",
+                                            "errors": [
+                                                "You do not have permission to update this row"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Rented Car"
+                ],
+                "summary": "Delete rented car",
+                "description": "Delete rented car",
+                "operationId": "deleteRentedCar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Rented_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Success response.",
+                                        "value": {
+                                            "message": "Row success deleted",
+                                            "errors": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Unauthenticated",
+                                        "value": {
+                                            "message": "Unauthenticated"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Service Unavailable.",
+                                        "value": {
+                                            "message": "Delete fail",
+                                            "errors": [
+                                                "Problems with delete this row"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "array": {
+                                        "summary": "Forbidden.",
+                                        "value": {
+                                            "message": "delete error",
+                                            "errors": [
+                                                "You do not have permission to delete this row"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authorization",
+            "description": "Register, login and get api token, logout"
+        },
+        {
+            "name": "Cars",
+            "description": "Show all active cars"
+        },
+        {
+            "name": "Rented Car",
+            "description": "Add, show, delete rented cars"
+        }
+    ]
+}
