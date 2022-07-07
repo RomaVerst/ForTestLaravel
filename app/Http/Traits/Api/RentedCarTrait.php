@@ -13,7 +13,7 @@ trait RentedCarTrait
         if (!$user) return response()->json([
             'message' => 'fail',
             'errors' => ['not found user']
-        ]);
+        ], 401);
         return $param === '' ? $user : $user[$param];
     }
 
@@ -27,7 +27,8 @@ trait RentedCarTrait
         $rentCar->user_id = $request->user()->id;
         $rentCar->car_id = $request->car_id;
         $rentCar->end_rent = $endRent;
-        return $rentCar->save();
+        $rentCar->save();
+        return $rentCar;
     }
 
     public function isSameRow(RentedCar $rentedCar) {

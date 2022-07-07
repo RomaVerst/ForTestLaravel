@@ -24,6 +24,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('cars', [CarController::class, 'index']);
     Route::apiResource('rented-cars', \Api\RentedCarController::class)->except(['show']);
+    Route::post('logout', [AuthController::class, 'logout'])->name('logoutApp');
 });
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
